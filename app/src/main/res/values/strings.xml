@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Movies Project</string>
+    <string name="loading">Loading Data…</string>
+    <string name="no_connection">NO Internet Connection Found</string>
+    <string name="no_server">NO Server Connection Found</string>
+    <string name="no_authorization">NO Authorization Found</string>
+    <string name="parse_error">Parsing Error</string>
+    <string name="time_out">TimeOut Rechead</string>
+    <string name="popular">Popular Movies</string>
+    <string name="rated">Best Rated Movies</string>
+</resources>
