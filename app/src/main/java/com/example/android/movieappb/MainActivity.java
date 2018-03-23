@@ -173,25 +173,47 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager == null) {
+            return false;
+        }
+
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
     //Menu Options
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int itemSelecionado = item.getItemId();
 
         if(itemSelecionado == R.id.most_popular){
-            movieList.clear();
-            URL_DATA = "https://api.themoviedb.org/3/movie/popular?api_key=38eeef9aa65a725363ccb5cde9df6342&language=en-US&page=1";
-            loadRecyclerView();
-            Toast.makeText(getApplicationContext(),getString(R.string.popular), Toast.LENGTH_SHORT).show();
-            return true;
-
+            if(isNetworkAvailable()){
+                movieList.clear();
+                URL_DATA = "https://api.themoviedb.org/3/movie/popular?api_key=38eeef9aa65a725363ccb5cde9df6342&language=en-US&page=1";
+                loadRecyclerView();
+                Toast.makeText(getApplicationContext(),getString(R.string.popular), Toast.LENGTH_SHORT).show();
+                return true;
+            }
+            else{
+                Toast.makeText(getApplicationContext(),getString(R.string.no_connection), Toast.LENGTH_SHORT).show();
+                return false;
+            }
         } else if(itemSelecionado == R.id.rate_view) {
-            movieList.clear();
-            URL_DATA = "https://api.themoviedb.org/3/movie/top_rated?api_key=38eeef9aa65a725363ccb5cde9df6342&language=en-US&page=1";
-            loadRecyclerView();
-            Toast.makeText(getApplicationContext(), getString(R.string.rated), Toast.LENGTH_SHORT).show();
-            return true;
+            if(isNetworkAvailable()){
+                movieList.clear();
 
+                URL_DATA = "https://api.themoviedb.org/3/movie/top_rated?api_key=38eeef9aa65a725363ccb5cde9df6342&language=en-US&page=1";
+                loadRecyclerView();
+                Toast.makeText(getApplicationContext(), getString(R.string.rated), Toast.LENGTH_SHORT).show();
+                return true;
+            }
+            else{
+                Toast.makeText(getApplicationContext(),getString(R.string.no_connection), Toast.LENGTH_SHORT).show();
+                return false;
+            }
         } else{
          return super.onOptionsItemSelected(item);
         }
